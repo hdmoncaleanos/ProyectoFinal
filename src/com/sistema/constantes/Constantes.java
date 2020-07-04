@@ -2,9 +2,9 @@ package com.sistema.constantes;
 
 public class Constantes {
 	
-public static final String ESTADO_SUCEPTIBLE = "S";
-public static final String ESTADO_INFECTADO = "I";
-public static final String ESTADO_RECUPERADO = "R";
-public static final String ESTADO_CUARTO = "D";
+	public static final int ESTADO_SUCEPTIBLE = 0;
+	public static final int ESTADO_LATENTE = 1;
+	public static final int ESTADO_INFECTADO = 2;
+	public static final int ESTADO_RECUPERADO = 3;
 
 }

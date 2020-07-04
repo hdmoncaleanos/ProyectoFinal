@@ -11,6 +11,8 @@ import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
 
 import com.simulador.utils.Utils;
+import com.sistema.constantes.Constantes;
+import com.sistema.objetos.Transiciones;
 
 public class Ambiente {
 	
@@ -28,12 +30,13 @@ public class Ambiente {
 			nodos.put(i + "", new Nodo(i + "", ""));
 		}
 		red = new SingleGraph("Red");
-	    Generator gen = new RandomGenerator(2);
+	    Generator gen = new RandomGenerator(4);
 	    gen.addSink(red);
 	    gen.begin();
 	    
-	    for(int i=0; i<cantidad_nodos - 3; i++)
-	        gen.nextEvents();
+	    while (red.getNodeCount()< cantidad_nodos) {
+	    	gen.nextEvents();
+		}
 	    gen.end();
 	    
 	    int nodes = red.getNodeCount();
@@ -48,15 +51,24 @@ public class Ambiente {
 		Iterable<? extends Node> cadaNodo = red.getEachNode();
 		//Recorremos cada nodo de la red.
 		for (Node node : cadaNodo) {
+//			System.out.println("######################");
 			
+			Nodo nodoActual = nodos.get(node.getId());
+			nodoActual.setVecinos_infectados(0);
 			Iterable<Edge> cadaVecino = node.getEachEdge();
 			//Recorremos cada vecino del nodo actual.
 			for (Edge edge : cadaVecino) {
-				
+				Nodo nodoVecino = nodos.get(edge.getNode0().getId());
+				if(nodoVecino.getEstado() == Constantes.ESTADO_INFECTADO){
+					nodoActual.setVecinos_infectados(nodoActual.getVecinos_infectados() + 1);
+				}
 			}
 			
 			//TODO hacer la logica de cambio de estado
+			Transiciones.getInstance().siguienteEstado(nodoActual);
+			
 		}
+		
 		pasos++;
 	}
 

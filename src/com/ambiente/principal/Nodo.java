@@ -1,17 +1,23 @@
 package com.ambiente.principal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.sistema.constantes.Constantes;
 
 public class Nodo {
 	
 	private String id_nodo;
-	private String estado;
+	private Integer estado;
 	private String tipo;
+	private Integer vecinos_infectados;
+	private List<Integer> historial_estados;
 	
 	public Nodo(String id_nodo, String tipo) {
 		this.id_nodo = id_nodo;
 		this.estado = Constantes.ESTADO_SUCEPTIBLE;
 		this.tipo = tipo;
+		this.historial_estados = new ArrayList<Integer>();
 	}
 
 	public String getId_nodo() {
@@ -22,11 +28,12 @@ public class Nodo {
 		this.id_nodo = id_nodo;
 	}
 
-	public String getEstado() {
+	public Integer getEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(Integer estado) {
+		this.historial_estados.add(estado);
 		this.estado = estado;
 	}
 
@@ -36,6 +43,14 @@ public class Nodo {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	public Integer getVecinos_infectados() {
+		return vecinos_infectados;
+	}
+
+	public void setVecinos_infectados(Integer vecinos_infectados) {
+		this.vecinos_infectados = vecinos_infectados;
 	}
 	
 }
