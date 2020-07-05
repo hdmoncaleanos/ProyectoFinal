@@ -19,27 +19,67 @@ public class Transiciones {
 	}
 	
 	public void siguienteEstado(Nodo nodo, ObservacionPaso observacionPaso){
-		Integer ultimoEstado = nodo.getEstado();
-		Integer nuevoEstado = ultimoEstado;
-		switch (ultimoEstado) {
+		Integer estado_anterior = nodo.getEstado();
+		Integer nuevo_estado = null;
+		
+		switch (estado_anterior) {
 		case Constantes.ESTADO_SUCEPTIBLE:
-			nuevoEstado = obtenerSiguienteEstadoSuceptible(nodo);
-			nodo.setEstado(nuevoEstado );
+			nuevo_estado = obtenerSiguienteEstadoSuceptible(nodo);
 			break;
 		case Constantes.ESTADO_INFECTADO:
-			nuevoEstado = obtenerSiguienteEstadoInfectado(nodo);
+			nuevo_estado = obtenerSiguienteEstadoInfectado(nodo);
 			break;
 		case Constantes.ESTADO_RECUPERADO:
-			nuevoEstado = obtenerSiguienteEstadoRecuperado(nodo);
+			nuevo_estado = obtenerSiguienteEstadoRecuperado(nodo);
 			break;
 		case Constantes.ESTADO_LATENTE:
-			nuevoEstado = obtenerSiguienteEstadoLatente(nodo);
+			nuevo_estado = obtenerSiguienteEstadoLatente(nodo);
 			break;
 		default:
 			break;
 		}
 		
-		nodo.setEstado( nuevoEstado );
+		if(nuevo_estado != estado_anterior){
+			switch (nuevo_estado) {
+			case Constantes.ESTADO_SUCEPTIBLE:
+				observacionPaso.incrementarNuevosSuceptibles();
+				observacionPaso.incrementarSuceptibles();
+				break;
+			case Constantes.ESTADO_INFECTADO:
+				observacionPaso.incrementarNuevosInfectados();
+				observacionPaso.incrementarInfectados();
+				break;
+			case Constantes.ESTADO_RECUPERADO:
+				observacionPaso.incrementarNuevosRecuperados();
+				observacionPaso.incrementarRecuperados();
+				break;
+			case Constantes.ESTADO_LATENTE:
+				observacionPaso.incrementarNuevosLatentes();
+				observacionPaso.incrementarLatentes();
+				break;
+			default:
+				break;
+			}
+		}else{
+			switch (nuevo_estado) {
+			case Constantes.ESTADO_SUCEPTIBLE:
+				observacionPaso.incrementarSuceptibles();
+				break;
+			case Constantes.ESTADO_INFECTADO:
+				observacionPaso.incrementarInfectados();
+				break;
+			case Constantes.ESTADO_RECUPERADO:
+				observacionPaso.incrementarRecuperados();
+				break;
+			case Constantes.ESTADO_LATENTE:
+				observacionPaso.incrementarLatentes();
+				break;
+			default:
+				break;
+			}
+		}
+		
+		nodo.setEstado( nuevo_estado );
 	}
 
 	private Integer obtenerSiguienteEstadoLatente(Nodo nodo) {

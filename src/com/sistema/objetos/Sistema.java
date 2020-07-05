@@ -8,7 +8,6 @@ import com.sistema.principal.Propiedades;
 
 public class Sistema {
 	
-	private Integer n;
 	private int cantidad_ambientes;
 	private int cantidad_pasos;
 	private Observador observador;

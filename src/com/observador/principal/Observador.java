@@ -1,15 +1,10 @@
 package com.observador.principal;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.ambiente.principal.Ambiente;
-import com.ambiente.principal.Nodo;
-import com.sistema.constantes.Constantes;
+import com.simulador.utils.Utils;
 
 public class Observador {
 	
@@ -39,24 +34,22 @@ public class Observador {
 
 	public void getInfoAmbiente(Ambiente ambiente) {
 		
-		Map<String, Nodo> nodosAmbiente = ambiente.getNodos();
-		ObservacionAmbiente observacion = new ObservacionAmbiente();
+//		Map<String, Nodo> nodosAmbiente = ambiente.getNodos();
+//		ObservacionAmbiente observacion = new ObservacionAmbiente();
+//		
+//		for (Nodo nodo : nodosAmbiente.values()) {
+//
+//			observacion.cantidadNodos = ambiente.getCantidad_nodos();
+//			nodo.getEstado();
+//			
+//		}
 		
-		for (Nodo nodo : nodosAmbiente.values()) {
-
-			observacion.cantidadNodos = ambiente.getCantidad_nodos();
-			nodo.getEstado();
-			
-			
-			
-		}
-		
-		observacionesPorAmbiente.add(observacion);
+		observacionesPorAmbiente.add(ambiente.getObservacionAmbiente());
 		
 	}
 	
 	public void generarAnalisis() {
-		
+		Utils.println(observacionesPorAmbiente);
 //		 try (PrintWriter writer = new PrintWriter(new File("./log/test.csv"))) {
 //
 //		      StringBuilder sb = new StringBuilder();
