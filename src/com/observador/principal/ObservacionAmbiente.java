@@ -49,4 +49,12 @@ public class ObservacionAmbiente {
 		this.totalRecuperados = totalRecuperados;
 	}
 	
+	public void aumentarTotalInfecciones(Integer aumento) {
+		totalInfecciones += aumento;
+	}
+	
+	public void aumentarTotalRecuperados(Integer aumento) {
+		totalRecuperados += aumento;
+	}
+	
 }

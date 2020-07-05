@@ -120,14 +120,14 @@ public class Transiciones {
 
 	private Integer obtenerSiguienteEstadoRecuperado(Nodo nodo) {
 		// TODO Implementar funcion de probabilidad.
-		double p = 0.5;
+		double p = 0.01;
 		double random = Math.random();
 		return random > p ? Constantes.ESTADO_RECUPERADO : Constantes.ESTADO_SUCEPTIBLE;
 	}
 
 	private Integer obtenerSiguienteEstadoInfectado(Nodo nodo) {
 		// TODO Implementar funcion de probabilidad.
-		double p = 0.5;
+		double p = 0.2;
 
 		double random = Math.random();
 		return random > p ? Constantes.ESTADO_INFECTADO : Constantes.ESTADO_RECUPERADO;
@@ -144,7 +144,7 @@ public class Transiciones {
 
 		double p = 0.5;
 		double param_sucep = nodo.getSuceptibilidad();
-		double param_mails_recibidos = 1;
+		double param_mails_recibidos = 10;
 
 		double carrier = param_sucep * param_mails_recibidos / 10d; //normalizacion de suceptibilidad
 

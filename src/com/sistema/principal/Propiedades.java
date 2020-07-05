@@ -40,7 +40,7 @@ public class Propiedades {
 	
 	public static String obtenerPropiedad(String propiedad){
 		String valor = StringUtils.trimToNull(properties.getProperty(propiedad));
-		System.out.println("El valor para la propiedad \"" + propiedad + "\" es \"" + valor + "\"");
+		//System.out.println("El valor para la propiedad \"" + propiedad + "\" es \"" + valor + "\"");
 		return valor;
 	}
 	

@@ -1,5 +1,9 @@
 package com.observador.principal;
 
+/**
+ * @author 
+ *
+ */
 public class ObservacionPaso {
 	private Integer paso;
 	private Integer suceptible;
@@ -112,5 +116,58 @@ public class ObservacionPaso {
 	public void incrementarRecuperados(){
 		recuperado++;
 	}
+	
+	public void incrementarNuevosInfectados(Integer aumento){
+		nuevosInfectados+=aumento;
+	}
+
+	public void incrementarNuevosSuceptibles(Integer aumento){
+		nuevosSuceptibles+=aumento;
+	}
+
+	public void incrementarNuevosLatentes(Integer aumento){
+		nuevosLatentes+=aumento;
+	}
+
+	public void incrementarNuevosRecuperados(Integer aumento){
+		nuevosRecuperados+=aumento;
+	}
+	public void incrementarInfectados(Integer aumento){
+		infectado+=aumento;
+	}
+
+	public void incrementarSuceptibles(Integer aumento){
+		suceptible+=aumento;
+	}
+
+	public void incrementarLatentes(Integer aumento){
+		latente+=aumento;
+	}
+
+	public void incrementarRecuperados(Integer aumento){
+		recuperado+=aumento;
+	}
+
+	public String getCSVString() {
+		return  (paso+1) + ", " 
+					+ suceptible + ","
+					+ latente + ","
+					+ infectado + ","
+					+ recuperado + "," 
+					+ nuevosSuceptibles + ","
+					+ nuevosLatentes + ","
+					+ nuevosInfectados + ","
+					+ nuevosRecuperados + "\n";
+	}
+	
+	@Override
+	public String toString() {
+		return "ObservacionPaso [paso=" + paso + ", suceptible=" + suceptible + ", latente=" + latente + ", infectado="
+				+ infectado + ", recuperado=" + recuperado + ", nuevosInfectados=" + nuevosInfectados
+				+ ", nuevosRecuperados=" + nuevosRecuperados + ", nuevosSuceptibles=" + nuevosSuceptibles
+				+ ", nuevosLatentes=" + nuevosLatentes + "]";
+	}
+	
+	
 	
 }
