@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sistema.constantes.Constantes;
+import com.sistema.principal.Propiedades;
 
 public class Nodo {
 	
@@ -11,7 +12,7 @@ public class Nodo {
 	private Integer estado;
 	private String tipo;
 	private Integer vecinos_infectados;
-	private Double sucseptibilidad;
+	private Double suceptibilidad;
 	private List<Integer> historial_estados;
 	
 	public Nodo(String id_nodo, String tipo) {
@@ -19,6 +20,22 @@ public class Nodo {
 		this.estado = Constantes.ESTADO_SUCEPTIBLE;
 		this.tipo = tipo;
 		this.historial_estados = new ArrayList<Integer>();
+
+		try {
+			this.suceptibilidad = Double.parseDouble(Propiedades.obtenerPropiedad("indice_susceptibilidad"));
+		}
+		catch (Exception e){
+			this.suceptibilidad = Math.random() * 10d;
+			System.out.print("indide de Susceptibilidad no valido. Usando valor por defecto");
+		}
+	}
+
+	public Nodo(String id_nodo, String tipo, Double suceptibilidad) {
+		this.id_nodo = id_nodo;
+		this.estado = Constantes.ESTADO_SUCEPTIBLE;
+		this.tipo = tipo;
+		this.historial_estados = new ArrayList<Integer>();
+		this.suceptibilidad = suceptibilidad;
 	}
 
 	public String getId_nodo() {
@@ -62,11 +79,11 @@ public class Nodo {
 		this.historial_estados = historial_estados;
 	}
 
-	public Double getSucseptibilidad() {
-		return sucseptibilidad;
+	public Double getSuceptibilidad() {
+		return suceptibilidad;
 	}
 
-	public void setSucseptibilidad(Double sucseptibilidad) {
-		this.sucseptibilidad = sucseptibilidad;
+	public void setSuceptibilidad(Double suceptibilidad) {
+		this.suceptibilidad = suceptibilidad;
 	}
 }

@@ -4,9 +4,6 @@ import com.ambiente.principal.Nodo;
 import com.observador.principal.ObservacionPaso;
 import com.sistema.constantes.Constantes;
 import com.sistema.principal.Propiedades;
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.Properties;
 
 
 public class Transiciones {
@@ -105,17 +102,19 @@ public class Transiciones {
 		/*Acorde a http://www.csis.pace.edu/~ctappert/dps/2013EISIC/EISIC2013/5062a038.pdf
 		probabilidad de contagio por email*/
 
-		p = (1 - param_deteccion_antivirus) * ((double) (media_clicks / vistas_correo));
+		p = (1 - param_deteccion_antivirus) * ((media_clicks / vistas_correo));
 
-		double q = 0.3;
+		double q = 1 - (nodo.getSuceptibilidad()/10d + p);
+
+		double norm_prob = Double.min(p + q, 1d);
 		
 		double random = Math.random();
 		if(random < p){
-			return Constantes.ESTADO_LATENTE;
-		} else if (random >= p && random < p + q){
 			return Constantes.ESTADO_INFECTADO;
-		} else{
+		} else if (random >= p && random < norm_prob){
 			return Constantes.ESTADO_RECUPERADO;
+		} else{
+			return Constantes.ESTADO_LATENTE;
 		}
 	}
 
@@ -141,13 +140,13 @@ public class Transiciones {
 		acorde al numero de nodos de la organizacion
 		* */
 
-		int n_nodos = Integer.valueOf(Propiedades.obtenerPropiedad("cantidad_nodos"));
+		int n_nodos = Integer.parseInt(Propiedades.obtenerPropiedad("cantidad_nodos"));
 
 		double p = 0.5;
-		double param_sucep = nodo.getSucseptibilidad();
+		double param_sucep = nodo.getSuceptibilidad();
 		double param_mails_recibidos = 1;
 
-		double carrier = param_sucep * param_mails_recibidos;
+		double carrier = param_sucep * param_mails_recibidos / 10d; //normalizacion de suceptibilidad
 
 		if(n_nodos <= 250)
 			p = Double.min((1d/376) * carrier, 1d);
