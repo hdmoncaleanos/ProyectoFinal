@@ -47,6 +47,7 @@ public class Ambiente {
 		if(id_ambiente.equals(1)){
 			red.display();
 		}
+		observacionAmbiente.setCantidadNodos(cantidad_nodos);
 	}
 	
 	private void siguientePaso(){
@@ -72,6 +73,8 @@ public class Ambiente {
 		}
 		
 		pasos++;
+		observacionAmbiente.aumentarTotalInfecciones(observacionPaso.getNuevosInfectados());
+		observacionAmbiente.aumentarTotalRecuperados(observacionPaso.getNuevosRecuperados());
 		observacionAmbiente.getObservacionesPaso().add(observacionPaso);
 	}
 
