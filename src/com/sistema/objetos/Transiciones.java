@@ -84,7 +84,6 @@ public class Transiciones {
 	}
 
 	private Integer obtenerSiguienteEstadoLatente(Nodo nodo) {
-		// TODO Implementar funcion de probabilidad.
 		double p = 0.3;
 
 		double param_deteccion_antivirus = 0.1;
@@ -119,15 +118,27 @@ public class Transiciones {
 	}
 
 	private Integer obtenerSiguienteEstadoRecuperado(Nodo nodo) {
-		// TODO Implementar funcion de probabilidad.
 		double p = 0.5;
+
+		try {
+			p = Double.parseDouble(Propiedades.obtenerPropiedad("tasa_deblilitamiento"));
+		}
+		catch (Exception e){
+			throw new RuntimeException("Propiedad tasa_deblilitamiento no definida correctamente: " + e);
+		}
+
 		double random = Math.random();
 		return random > p ? Constantes.ESTADO_RECUPERADO : Constantes.ESTADO_SUCEPTIBLE;
 	}
 
 	private Integer obtenerSiguienteEstadoInfectado(Nodo nodo) {
-		// TODO Implementar funcion de probabilidad.
 		double p = 0.5;
+
+		try {
+			p = Double.parseDouble(Propiedades.obtenerPropiedad("tasa_recuperacion"));
+		}catch (Exception e){
+			throw new RuntimeException("Propiedad tasa_recuperacion no definida correctamente: " + e);
+		}
 
 		double random = Math.random();
 		return random > p ? Constantes.ESTADO_INFECTADO : Constantes.ESTADO_RECUPERADO;
@@ -140,23 +151,25 @@ public class Transiciones {
 		acorde al numero de nodos de la organizacion
 		* */
 
-		int n_nodos = Integer.parseInt(Propiedades.obtenerPropiedad("cantidad_nodos"));
+		int numeroDeNodosEnRed = Integer.parseInt(Propiedades.obtenerPropiedad("cantidad_nodos"));
 
 		double p = 0.5;
 		double param_sucep = nodo.getSuceptibilidad();
 		double param_mails_recibidos = 1;
 
+		param_mails_recibidos = Double.parseDouble(Propiedades.obtenerPropiedad("numero_correos_recibidos"));
+
 		double carrier = param_sucep * param_mails_recibidos / 10d; //normalizacion de suceptibilidad
 
-		if(n_nodos <= 250)
+		if(numeroDeNodosEnRed <= 250)
 			p = Double.min((1d/376) * carrier, 1d);
-		else if(n_nodos <= 500)
+		else if(numeroDeNodosEnRed <= 500)
 			p = Double.min((1d/306) * carrier, 1d);
-		else if(n_nodos <= 1000)
+		else if(numeroDeNodosEnRed <= 1000)
 			p = Double.min((1d/425) * carrier, 1d);
-		else if(n_nodos <= 1500)
+		else if(numeroDeNodosEnRed <= 1500)
 			p = Double.min((1d/244) * carrier, 1d);
-		else if(n_nodos <= 2500)
+		else if(numeroDeNodosEnRed <= 2500)
 			p = Double.min((1d/355) * carrier, 1d);
 		else
 			p = Double.min((1d/512) * carrier, 1d);
