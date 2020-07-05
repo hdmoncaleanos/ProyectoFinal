@@ -49,6 +49,16 @@ public class Transiciones {
 	private Integer obtenerSiguienteEstadoLatente(Nodo nodo) {
 		// TODO Implementar funcion de probabilidad.
 		double p = 0.3;
+
+		double param_deteccion_antivirus = 0.1;
+		double media_clicks = 1;
+		double vistas_correo = 1;
+
+		/*Acorde a http://www.csis.pace.edu/~ctappert/dps/2013EISIC/EISIC2013/5062a038.pdf
+		probabilidad de contagio por email*/
+
+		p = (1 - param_deteccion_antivirus) * ((double) (media_clicks / vistas_correo));
+
 		double q = 0.3;
 		
 		double random = Math.random();
@@ -71,15 +81,6 @@ public class Transiciones {
 	private Integer obtenerSiguienteEstadoInfectado(Nodo nodo) {
 		// TODO Implementar funcion de probabilidad.
 		double p = 0.5;
-
-		double param_deteccion_anti = 0.1;
-		double media_clicks = 1;
-		double vistas_correo = 1;
-
-		/*Acorde a http://www.csis.pace.edu/~ctappert/dps/2013EISIC/EISIC2013/5062a038.pdf
-		probabilidad de contagio por email*/
-
-		p = (1 - param_deteccion_anti) * ((double) (media_clicks / vistas_correo));
 
 		double random = Math.random();
 		return random > p ? Constantes.ESTADO_INFECTADO : Constantes.ESTADO_RECUPERADO;
