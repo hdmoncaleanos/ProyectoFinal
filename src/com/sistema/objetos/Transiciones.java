@@ -134,26 +134,26 @@ public class Transiciones {
 		acorde al numero de nodos de la organizacion
 		* */
 
-		int n_nodos = Integer.getInteger(Propiedades.obtenerPropiedad("cantidad_nodos"));
+		int n_nodos = Integer.valueOf(Propiedades.obtenerPropiedad("cantidad_nodos"));
 
 		double p = 0.5;
 		double param_sucep = 1;
-		double param_mails_recibidos = 1;
+		double param_mails_recibidos = 50;
 
 		double carrier = param_sucep * param_mails_recibidos;
 
 		if(n_nodos <= 250)
-			p = Double.min((1/376) * carrier, 1d);
+			p = Double.min((1d/376) * carrier, 1d);
 		else if(n_nodos <= 500)
-			p = Double.min((1/306) * carrier, 1d);
+			p = Double.min((1d/306) * carrier, 1d);
 		else if(n_nodos <= 1000)
-			p = Double.min((1/425) * carrier, 1d);
+			p = Double.min((1d/425) * carrier, 1d);
 		else if(n_nodos <= 1500)
-			p = Double.min((1/244) * carrier, 1d);
+			p = Double.min((1d/244) * carrier, 1d);
 		else if(n_nodos <= 2500)
-			p = Double.min((1/355) * carrier, 1d);
+			p = Double.min((1d/355) * carrier, 1d);
 		else
-			p = Double.min((1/512) * carrier, 1d);
+			p = Double.min((1d/512) * carrier, 1d);
 
 		double random = Math.random();
 		return random > p ? Constantes.ESTADO_SUCEPTIBLE : Constantes.ESTADO_LATENTE;
