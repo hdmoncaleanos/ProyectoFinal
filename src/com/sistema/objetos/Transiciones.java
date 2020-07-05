@@ -94,6 +94,14 @@ public class Transiciones {
 		double media_clicks = 1;
 		double vistas_correo = 1;
 
+		try {
+			param_deteccion_antivirus = Double.parseDouble(Propiedades.obtenerPropiedad("porcentaje_protecciojn_antivirus"));
+			media_clicks = Double.parseDouble(Propiedades.obtenerPropiedad("media_clicks"));
+			vistas_correo = Double.parseDouble(Propiedades.obtenerPropiedad("visitas_a_correo"));
+		}catch (Exception e){
+			throw new RuntimeException("Propiedades param_deteccion_antivirus, media_clicks o vistas_correo no definidas correctamente: " + e);
+		}
+
 		/*Acorde a http://www.csis.pace.edu/~ctappert/dps/2013EISIC/EISIC2013/5062a038.pdf
 		probabilidad de contagio por email*/
 
@@ -127,7 +135,6 @@ public class Transiciones {
 	}
 
 	private Integer obtenerSiguienteEstadoSuceptible(Nodo nodo) {
-		// TODO Implementar funcion de probabilidad.
 
 		/*Acorde a https://blog.icorps.com/spam-malware-email-security
 		el numero de correos maliciosos oscila entre 1 cada 244 y 1 cada 512 miembros de una organizacion
@@ -137,7 +144,7 @@ public class Transiciones {
 		int n_nodos = Integer.getInteger(Propiedades.obtenerPropiedad("cantidad_nodos"));
 
 		double p = 0.5;
-		double param_sucep = 1;
+		double param_sucep = nodo.getSucseptibilidad();
 		double param_mails_recibidos = 1;
 
 		double carrier = param_sucep * param_mails_recibidos;

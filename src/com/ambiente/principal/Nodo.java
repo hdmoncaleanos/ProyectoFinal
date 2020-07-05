@@ -11,6 +11,7 @@ public class Nodo {
 	private Integer estado;
 	private String tipo;
 	private Integer vecinos_infectados;
+	private Double sucseptibilidad;
 	private List<Integer> historial_estados;
 	
 	public Nodo(String id_nodo, String tipo) {
@@ -60,5 +61,12 @@ public class Nodo {
 	public void setHistorial_estados(List<Integer> historial_estados) {
 		this.historial_estados = historial_estados;
 	}
-	
+
+	public Double getSucseptibilidad() {
+		return sucseptibilidad;
+	}
+
+	public void setSucseptibilidad(Double sucseptibilidad) {
+		this.sucseptibilidad = sucseptibilidad;
+	}
 }
