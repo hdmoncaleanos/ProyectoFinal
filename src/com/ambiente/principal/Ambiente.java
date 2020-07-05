@@ -10,6 +10,8 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
 
+import com.observador.principal.ObservacionAmbiente;
+import com.observador.principal.ObservacionPaso;
 import com.simulador.utils.Utils;
 import com.sistema.constantes.Constantes;
 import com.sistema.objetos.Transiciones;
@@ -20,6 +22,7 @@ public class Ambiente {
 	private Map<String, Nodo> nodos;
 	private Graph red;
 	private Integer pasos = 0;
+	private ObservacionAmbiente observacionAmbiente = new ObservacionAmbiente();
 	
 	public Ambiente(Integer id_ambiente, Integer cantidad_nodos){
 		this.cantidad_nodos = cantidad_nodos;
@@ -49,6 +52,7 @@ public class Ambiente {
 	
 	private void siguientePaso(){
 		Iterable<? extends Node> cadaNodo = red.getEachNode();
+		ObservacionPaso observacionPaso = new ObservacionPaso();
 		//Recorremos cada nodo de la red.
 		for (Node node : cadaNodo) {
 //			System.out.println("######################");
@@ -65,18 +69,19 @@ public class Ambiente {
 			}
 			
 			//TODO hacer la logica de cambio de estado
-			Transiciones.getInstance().siguienteEstado(nodoActual);
+			Transiciones.getInstance().siguienteEstado(nodoActual, observacionPaso);
 			
 		}
 		
 		pasos++;
+		observacionAmbiente.getObservacionesPaso().add(observacionPaso);
 	}
 
 	public void ejecutar(Integer cantidad_pasos){
 		for(int i = 0; i<cantidad_pasos; i++){
 			siguientePaso();
 		}
-		Utils.println(nodos);
+		//Utils.println(nodos);
 	}
 
 	public Integer getCantidad_nodos() {

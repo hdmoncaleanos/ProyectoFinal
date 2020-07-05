@@ -9,11 +9,12 @@ import java.util.Map;
 
 import com.ambiente.principal.Ambiente;
 import com.ambiente.principal.Nodo;
+import com.sistema.constantes.Constantes;
 
 public class Observador {
 	
 	private static Observador observador;
-	private List<Observacion> observacionesPorAmbiente; 
+	private List<ObservacionAmbiente> observacionesPorAmbiente; 
 	
 	private Observador() {
 		this.observacionesPorAmbiente = new ArrayList<>();
@@ -28,38 +29,27 @@ public class Observador {
 		return observador;
 	}
 
-	public List<Observacion> getAlbumesLlenosPorAmbiente() {
+	public List<ObservacionAmbiente> getAlbumesLlenosPorAmbiente() {
 		return observacionesPorAmbiente;
 	}
 
-	public void setAlbumesLlenosPorAmbiente(List<Observacion> albumesLlenosPorAmbiente) {
+	public void setAlbumesLlenosPorAmbiente(List<ObservacionAmbiente> albumesLlenosPorAmbiente) {
 		this.observacionesPorAmbiente = albumesLlenosPorAmbiente;
 	}
 
 	public void getInfoAmbiente(Ambiente ambiente) {
 		
-		Map<String, Nodo> estudiantesAmbiente = ambiente.getNodos();
-		Observacion observacion = new Observacion();
+		Map<String, Nodo> nodosAmbiente = ambiente.getNodos();
+		ObservacionAmbiente observacion = new ObservacionAmbiente();
 		
-		for (Nodo estudiante : estudiantesAmbiente.values()) {
+		for (Nodo nodo : nodosAmbiente.values()) {
 
 			observacion.cantidadNodos = ambiente.getCantidad_nodos();
-			estudiante.getEstado();
-
-//			if(estudiante.tieneAlbumLleno()) {
-//				observacion.albumesLlenosAmbiente++;
-//				observacion.laminasCompradasAlbumesLlenos += estudiante.getLaminas_compradas();
-//				observacion.cantidadIntercambiosAlbumesLlenos += estudiante.getLaminas_cambiadas();
-//			}
+			nodo.getEstado();
 			
-//			observacion.totalLaminasCompradasAmbiente += estudiante.getLaminas_compradas();
-//			observacion.cantidadIntercambiosAmbiente += estudiante.getLaminas_cambiadas();
+			
 			
 		}
-		
-		observacion.cantidadIntercambiosAmbiente = observacion.cantidadIntercambiosAmbiente / 2; 
-		
-		observacion.cantidadAmistades = ambiente.getRed().getEdgeCount();
 		
 		observacionesPorAmbiente.add(observacion);
 		
@@ -67,36 +57,35 @@ public class Observador {
 	
 	public void generarAnalisis() {
 		
-		 try (PrintWriter writer = new PrintWriter(new File("./log/test.csv"))) {
-
-		      StringBuilder sb = new StringBuilder();
-		      sb.append("Iteracion,"
-		      		+ "Cantidad estudiantes,"
-		      		+ "Cantidad de amistades, "
-		      		+ "Albumes llenos ambiente,"
-		      		+ "Total compradas en ambiente,"
-		      		+ "Total compradas para albumes llenos,"
-		      		+ "Promedio compradas por estudiante,"
-		      		+ "Promedio compradas para albumes llenos,"
-		      		+ "Promedio intercambios ambiente,"
-		      		+ "Promedio intercambio albumes llenos"
-		      		+"\n");
-		      
-		  	
-				for (Observacion observacion : observacionesPorAmbiente) {
-					System.out.println(observacion);
-					sb.append( observacionesPorAmbiente.indexOf(observacion)  + 
-							"," + observacion.getCSVLine());
-					
-				}
-		      
-		      writer.write(sb.toString());
-
-		      System.out.println("done!");
-
-		    } catch (FileNotFoundException e) {
-		      System.out.println(e.getMessage());
-		    }
+//		 try (PrintWriter writer = new PrintWriter(new File("./log/test.csv"))) {
+//
+//		      StringBuilder sb = new StringBuilder();
+//		      sb.append("Iteracion,"
+//		      		+ "Cantidad estudiantes,"
+//		      		+ "Cantidad de amistades, "
+//		      		+ "Albumes llenos ambiente,"
+//		      		+ "Total compradas en ambiente,"
+//		      		+ "Total compradas para albumes llenos,"
+//		      		+ "Promedio compradas por estudiante,"
+//		      		+ "Promedio compradas para albumes llenos,"
+//		      		+ "Promedio intercambios ambiente,"
+//		      		+ "Promedio intercambio albumes llenos"
+//		      		+"\n");
+//		      
+//		  	
+//				for (Observacion observacion : observacionesPorAmbiente) {
+//					System.out.println(observacion);
+//					sb.append( observacionesPorAmbiente.indexOf(observacion)  );
+//					
+//				}
+//		      
+//		      writer.write(sb.toString());
+//
+//		      System.out.println("done!");
+//
+//		    } catch (FileNotFoundException e) {
+//		      System.out.println(e.getMessage());
+//		    }
 
 	}
 

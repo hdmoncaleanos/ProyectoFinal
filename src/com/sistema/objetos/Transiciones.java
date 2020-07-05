@@ -1,6 +1,7 @@
 package com.sistema.objetos;
 
 import com.ambiente.principal.Nodo;
+import com.observador.principal.ObservacionPaso;
 import com.sistema.constantes.Constantes;
 
 
@@ -17,24 +18,28 @@ public class Transiciones {
 		return instance;
 	}
 	
-	public void siguienteEstado(Nodo nodo){
-		
-		switch (nodo.getEstado()) {
+	public void siguienteEstado(Nodo nodo, ObservacionPaso observacionPaso){
+		Integer ultimoEstado = nodo.getEstado();
+		Integer nuevoEstado = ultimoEstado;
+		switch (ultimoEstado) {
 		case Constantes.ESTADO_SUCEPTIBLE:
-			nodo.setEstado(obtenerSiguienteEstadoSuceptible(nodo) );
+			nuevoEstado = obtenerSiguienteEstadoSuceptible(nodo);
+			nodo.setEstado(nuevoEstado );
 			break;
 		case Constantes.ESTADO_INFECTADO:
-			nodo.setEstado(obtenerSiguienteEstadoInfectado(nodo) );
+			nuevoEstado = obtenerSiguienteEstadoInfectado(nodo);
 			break;
 		case Constantes.ESTADO_RECUPERADO:
-			nodo.setEstado(obtenerSiguienteEstadoRecuperado(nodo) );
+			nuevoEstado = obtenerSiguienteEstadoRecuperado(nodo);
 			break;
 		case Constantes.ESTADO_LATENTE:
-			nodo.setEstado(obtenerSiguienteEstadoLatente(nodo) );
+			nuevoEstado = obtenerSiguienteEstadoLatente(nodo);
 			break;
 		default:
 			break;
 		}
+		
+		nodo.setEstado( nuevoEstado );
 	}
 
 	private Integer obtenerSiguienteEstadoLatente(Nodo nodo) {
