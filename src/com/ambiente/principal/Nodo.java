@@ -52,5 +52,13 @@ public class Nodo {
 	public void setVecinos_infectados(Integer vecinos_infectados) {
 		this.vecinos_infectados = vecinos_infectados;
 	}
+
+	public List<Integer> getHistorial_estados() {
+		return historial_estados;
+	}
+
+	public void setHistorial_estados(List<Integer> historial_estados) {
+		this.historial_estados = historial_estados;
+	}
 	
 }
