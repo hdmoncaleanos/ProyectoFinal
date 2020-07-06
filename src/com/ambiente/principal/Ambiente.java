@@ -14,6 +14,7 @@ import com.observador.principal.ObservacionAmbiente;
 import com.observador.principal.ObservacionPaso;
 import com.sistema.constantes.Constantes;
 import com.sistema.objetos.Transiciones;
+import com.sistema.principal.Propiedades;
 
 public class Ambiente {
 	
@@ -22,6 +23,13 @@ public class Ambiente {
 	private Graph red;
 	private Integer pasos = 0;
 	private ObservacionAmbiente observacionAmbiente = new ObservacionAmbiente();
+	//Vulnerabilidades en las empresas
+	private Boolean actualizaParches;
+	private Integer pasosHastaActualizacion;
+	private Double pesoActualizacion;
+	
+	private Boolean escaneaVulnerabilidades;
+	private Boolean conoceBrechas;
 	
 	public Ambiente(Integer id_ambiente, Integer cantidad_nodos, Integer grado_nodos){
 		this.cantidad_nodos = cantidad_nodos;
@@ -48,9 +56,15 @@ public class Ambiente {
 			red.display();
 		}
 		observacionAmbiente.setCantidadNodos(cantidad_nodos);
+		
+		double random = Math.random();
+		actualizaParches = random <= Double.parseDouble(Propiedades.obtenerPropiedad("porcentaje_actualiza_parches"));
+		pasosHastaActualizacion = Integer.parseInt(Propiedades.obtenerPropiedad("pasos_hasta_actualizacion"));
+		pesoActualizacion = Double.parseDouble(Propiedades.obtenerPropiedad("peso_actualizacion"));
+		
 	}
 	
-	private void siguientePaso(){
+	private void siguientePaso(Integer pasoActual){
 		Iterable<? extends Node> cadaNodo = red.getEachNode();
 		ObservacionPaso observacionPaso = new ObservacionPaso(pasos);
 		//Recorremos cada nodo de la red.
@@ -68,6 +82,12 @@ public class Ambiente {
 				}
 			}
 			
+			//Las acciones empresariales afectan la susceptibilidad de un nodo
+			if( pasoActual == pasosHastaActualizacion && actualizaParches ) {
+				nodoActual.setSuceptibilidad(nodoActual.getSuceptibilidad() * ( 1 - pesoActualizacion) );
+			}
+			
+			
 			Transiciones.getInstance().siguienteEstado(nodoActual, observacionPaso);
 			
 		}
@@ -80,7 +100,7 @@ public class Ambiente {
 
 	public void ejecutar(Integer cantidad_pasos){
 		for(int i = 0; i<cantidad_pasos; i++){
-			siguientePaso();
+			siguientePaso(i);
 		}
 		//Utils.println(nodos);
 	}
