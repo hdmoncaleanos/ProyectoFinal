@@ -23,7 +23,7 @@ public class Ambiente {
 	private Integer pasos = 0;
 	private ObservacionAmbiente observacionAmbiente = new ObservacionAmbiente();
 	
-	public Ambiente(Integer id_ambiente, Integer cantidad_nodos){
+	public Ambiente(Integer id_ambiente, Integer cantidad_nodos, Integer grado_nodos){
 		this.cantidad_nodos = cantidad_nodos;
 		
 		nodos = new HashMap<String, Nodo>();
@@ -32,7 +32,7 @@ public class Ambiente {
 			nodos.put(i + "", new Nodo(i + "", ""));
 		}
 		red = new SingleGraph("Red");
-	    Generator gen = new RandomGenerator(4);
+	    Generator gen = new RandomGenerator(grado_nodos);
 	    gen.addSink(red);
 	    gen.begin();
 	    

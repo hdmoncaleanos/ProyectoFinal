@@ -158,7 +158,7 @@ public class Transiciones {
 		double param_mails_recibidos = 1;
 
 		param_mails_recibidos = Double.parseDouble(Propiedades.obtenerPropiedad("numero_correos_recibidos"));
-
+		double tasa_infeccion = Double.parseDouble(Propiedades.obtenerPropiedad("tasa_infeccion"));
 		double carrier = param_sucep * param_mails_recibidos / 10d; //normalizacion de suceptibilidad
 
 		if(numeroDeNodosEnRed <= 250)
@@ -173,8 +173,22 @@ public class Transiciones {
 			p = Double.min((1d/355) * carrier, 1d);
 		else
 			p = Double.min((1d/512) * carrier, 1d);
-
+		
+		
+		
 		double random = Math.random();
-		return random > p ? Constantes.ESTADO_SUCEPTIBLE : Constantes.ESTADO_LATENTE;
+		int estadoNuevo = random > p ? Constantes.ESTADO_SUCEPTIBLE : Constantes.ESTADO_LATENTE;
+		
+		if(nodo.getVecinos_infectados() > 0 && estadoNuevo != Constantes.ESTADO_LATENTE){
+			
+			for (int i = 0; i < nodo.getVecinos_infectados(); i++) {
+				double r = Math.random();
+				if(r<tasa_infeccion){
+					return Constantes.ESTADO_LATENTE;
+				}
+			}
+		}
+		
+		return estadoNuevo;
 	}
 }

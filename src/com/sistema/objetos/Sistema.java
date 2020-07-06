@@ -12,6 +12,7 @@ public class Sistema {
 	private int cantidad_pasos;
 	private Observador observador;
 	private Integer cantidad_nodos;
+	private Integer grado_promedio;
 
 	public void inicializar(){
 		
@@ -32,7 +33,12 @@ public class Sistema {
 			throw new RuntimeException("No se encuentra configurada correctamente la propiedad: cantidad_nodos");
 		}
 		this.cantidad_nodos = Integer.parseInt(propiedad_cantidad_nodos);
-
+		
+		String propiedad_grado_promedio = Propiedades.obtenerPropiedad("grado_promedio");
+		if(propiedad_cantidad == null || !StringUtils.isNumeric(propiedad_cantidad)){
+			throw new RuntimeException("No se encuentra configurada correctamente la propiedad: grado_promedio");
+		}
+		this.grado_promedio = Integer.parseInt(propiedad_grado_promedio);
 	}
 	
 	public void simular(){
@@ -40,7 +46,7 @@ public class Sistema {
 		
 		for (int i = 1; i<= cantidad_ambientes; i++){
 			System.out.println("\n########## Inicio ejecucion para ambiente " + i + " ##########\n");
-			Ambiente ambiente = new Ambiente(i, cantidad_nodos);
+			Ambiente ambiente = new Ambiente(i, cantidad_nodos, grado_promedio);
 			ambiente.ejecutar( cantidad_pasos );
 			observador.getInfoAmbiente(ambiente);
 			System.out.println("\n########## Fin de ejecucion para ambiente " + i + " ##########\n");
