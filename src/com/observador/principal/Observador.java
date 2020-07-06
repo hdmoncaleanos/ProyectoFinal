@@ -56,9 +56,9 @@ public class Observador {
 	}
 	
 	public void generarAnalisis() {
-		Utils.println(observacionesPorAmbiente);
-		
-		//Creamos una nueva observación para encapsular el cálculo de los promedios
+//		Utils.println(observacionesPorAmbiente);
+		System.out.println("Iniciando generacion de analisis de datos de la simulacion.");
+		//Creamos una nueva observaciï¿½n para encapsular el cï¿½lculo de los promedios
 		//de todos los ambientes
 		
 		ObservacionAmbiente promedioSimulaciones = new ObservacionAmbiente();
@@ -148,7 +148,7 @@ public class Observador {
 
 			writer.write(sb.toString());
 
-			System.out.println("done!");
+			System.out.println("Fin de generacion de analisis de datos de la simulacion.");
 
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());

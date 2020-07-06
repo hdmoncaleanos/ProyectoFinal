@@ -20,8 +20,10 @@ public class Main {
         long fin = System.currentTimeMillis();
          
         double tiempo = (double) ((fin - inicio)/1000);
-         
+
+		System.out.println("Fin de la simulacion.");
         System.out.println("Tiempo simulacion: " + tiempo +" segundos");
+        System.exit(0);
 		
 	}
 	
