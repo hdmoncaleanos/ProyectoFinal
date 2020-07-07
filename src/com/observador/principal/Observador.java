@@ -109,7 +109,7 @@ public class Observador {
 			observacionPaso.setNuevosRecuperados(observacionPaso.getNuevosRecuperados() / cantidad_ambientes);
 		}
 		
-		try (PrintWriter writer = new PrintWriter(new File("./log/test.csv"))) {
+		try (PrintWriter writer = new PrintWriter(new File("./log/Simulacion" + System.currentTimeMillis() + ".csv"))) {
 
 			StringBuilder sb = new StringBuilder();
 			sb.append("Iteracion," 
