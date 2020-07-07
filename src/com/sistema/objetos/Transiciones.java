@@ -103,17 +103,15 @@ public class Transiciones {
 
 		p = (1 - param_deteccion_antivirus) * ((media_clicks / vistas_correo));
 
-		double q = 1 - (nodo.getSuceptibilidad()/10d + p);
-
-		double norm_prob = Double.min(p + q, 1d);
+		double q = ( 1 - p ) * nodo.getSuceptibilidad()/10d;
 		
 		double random = Math.random();
 		if(random < p){
 			return Constantes.ESTADO_INFECTADO;
-		} else if (random >= p && random < norm_prob){
-			return Constantes.ESTADO_RECUPERADO;
-		} else{
+		} else if (random >= p && random < p + q){
 			return Constantes.ESTADO_LATENTE;
+		} else{
+			return Constantes.ESTADO_RECUPERADO;
 		}
 	}
 
