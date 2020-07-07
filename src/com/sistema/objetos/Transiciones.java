@@ -136,7 +136,7 @@ public class Transiciones {
 		}
 
 		double random = Math.random();
-		return random > p ? Constantes.ESTADO_INFECTADO : Constantes.ESTADO_RECUPERADO;
+		return random <= p ?  Constantes.ESTADO_RECUPERADO : Constantes.ESTADO_INFECTADO ;
 	}
 
 	private Integer obtenerSiguienteEstadoSuceptible(Nodo nodo) {
