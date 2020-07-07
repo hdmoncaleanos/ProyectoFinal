@@ -87,21 +87,18 @@ public class Transiciones {
 		double p = 0.3;
 
 		double param_deteccion_antivirus = 0.1;
-		double media_clicks = 1;
-		double vistas_correo = 1;
-
+		double tasa_clicks_por_correo = 0;
 		try {
 			param_deteccion_antivirus = Double.parseDouble(Propiedades.obtenerPropiedad("porcentaje_protecciojn_antivirus"));
-			media_clicks = Double.parseDouble(Propiedades.obtenerPropiedad("media_clicks"));
-			vistas_correo = Double.parseDouble(Propiedades.obtenerPropiedad("visitas_a_correo"));
+			tasa_clicks_por_correo = Double.parseDouble(Propiedades.obtenerPropiedad("tasa_clicks_por_correo"));
 		}catch (Exception e){
-			throw new RuntimeException("Propiedades param_deteccion_antivirus, media_clicks o vistas_correo no definidas correctamente: " + e);
+			throw new RuntimeException("Propiedades param_deteccion_antivirus, tasa_clicks_por_correo no definidas correctamente: " + e);
 		}
 
 		/*Acorde a http://www.csis.pace.edu/~ctappert/dps/2013EISIC/EISIC2013/5062a038.pdf
 		probabilidad de contagio por email*/
 
-		p = (1 - param_deteccion_antivirus) * ((media_clicks / vistas_correo));
+		p = (1 - param_deteccion_antivirus) * (tasa_clicks_por_correo);
 
 		double q = ( 1 - p ) * nodo.getSuceptibilidad()/10d;
 		
