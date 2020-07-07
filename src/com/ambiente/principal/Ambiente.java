@@ -30,6 +30,7 @@ public class Ambiente {
 	
 	private Boolean escaneaVulnerabilidades;
 	private Boolean conoceBrechas;
+	private double umbralNodosInfectados;
 	
 	public Ambiente(Integer id_ambiente, Integer cantidad_nodos, Integer grado_nodos){
 		this.cantidad_nodos = cantidad_nodos;
@@ -61,6 +62,7 @@ public class Ambiente {
 		actualizaParches = random <= Double.parseDouble(Propiedades.obtenerPropiedad("porcentaje_actualiza_parches"));
 		pasosHastaActualizacion = Integer.parseInt(Propiedades.obtenerPropiedad("pasos_hasta_actualizacion"));
 		pesoActualizacion = Double.parseDouble(Propiedades.obtenerPropiedad("peso_actualizacion"));
+		umbralNodosInfectados = Double.parseDouble(Propiedades.obtenerPropiedad("umbral_nodos_infectados"));
 		
 	}
 	
@@ -83,9 +85,27 @@ public class Ambiente {
 			}
 			
 			//Las acciones empresariales afectan la susceptibilidad de un nodo
-			if( pasoActual == pasosHastaActualizacion && actualizaParches ) {
-				nodoActual.setSuceptibilidad(nodoActual.getSuceptibilidad() * ( 1 - pesoActualizacion) );
+			Double factorReduccion = ( 1 - pesoActualizacion);
+			if(actualizaParches && pasoActual > 0) {
+				
+				//Existe cultura empresarial de actualizacion periodica basada en un umbral de
+				//nodos infectados en la red
+				
+				ObservacionPaso observacionAnterior = observacionAmbiente.getObservacionesPaso().get(pasoActual - 1);
+				Double porcentajeInfectados = observacionAnterior.getInfectado().doubleValue()/this.cantidad_nodos.doubleValue();
+				
+				if( pasoActual % pasosHastaActualizacion == 0 && porcentajeInfectados >= umbralNodosInfectados ) {
+					nodoActual.setSuceptibilidad(nodoActual.getSuceptibilidad() * factorReduccion );
+				}
+				
+			}else if (nodoActual.getSuceptibilidad() < 10) {
+				
+				//Cada día que no se instala una actualizacion se hace mas susceptible
+				
+				nodoActual.setSuceptibilidad(nodoActual.getSuceptibilidad() * ( 1 + factorReduccion ) );
 			}
+			
+			
 			
 			
 			Transiciones.getInstance().siguienteEstado(nodoActual, observacionPaso);
